@@ -1,0 +1,21 @@
+User stories:
+Hospital - 
+log in to the account/create a new account
+they have to enter their address information
+maybe a phone number/their name and details
+add bed/add opening - allows you to enter condition of the bed, how many days it's free for, the price of the bed, etc.
+they can see the other hospital beds
+they can review applications of people who are asking to stay in the bed
+they can request support from other hospitals if they do not have bed
+Users - 
+they can log in to their account/create a new account
+they enter their address info/ which city they are in
+they enter phone number, name, other personal details
+they can create a request for a bed, and why they need it
+they can select it to only see requests in their own city
+they can also offer support
+they can see requests of other people, along with donations
+
+we can have two screens - one has the requests, and the other has the donations.
+We can also have screens to edit your personal info ( setting screen )
+we can have screens to see all the things you've donated/all the items on offer you've used
