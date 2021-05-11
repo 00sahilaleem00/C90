@@ -18,6 +18,7 @@ import firebase from "firebase";
 import { Input, Icon } from "react-native-elements";
 import { RFValue } from "react-native-responsive-fontsize";
 
+//This is analogous to WelcomeScreen
 export default class RegisterScreen extends Component {
   constructor() {
     super();
@@ -39,8 +40,7 @@ export default class RegisterScreen extends Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        //Once we create other screens we have to navigate to them here
-        return Alert.alert("Login Successful");
+        this.props.navigation.navigate("Donate");
       })
       .catch((error) => {
         var errorMessage = error.message;
