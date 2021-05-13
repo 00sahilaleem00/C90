@@ -17,37 +17,37 @@ import { RFValue } from "react-native-responsive-fontsize";
 import db from "../config.js";
 import firebase from "firebase";
 
-//This is analogous to ReceiverDetailsScreen
-export default class RequestAcceptScreen extends Component {
+//This is analogous to ReceiverDetailsScreen, but for donations
+export default class DonateAcceptScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userID: firebase.auth().currentUser.email,
-      donorID: this.props.navigation.getParam("details")["User_ID"],
+      requesterID: this.props.navigation.getParam("details")["User_ID"],
       name: this.props.navigation.getParam("details")["Name"],
       transactionID:
         this.props.navigation.getParam("details")["Transaction_ID"],
       description: this.props.navigation.getParam("details")["Description"],
-      donorName: "",
-      donorContact: "",
-      donorAddress: "",
+      requesterName: "",
+      requesterContact: "",
+      requesterAddress: "",
     };
   }
 
   componentDidMount = () => {
-    this.getDonorDetails();
+    this.getRequesterDetails();
   };
 
-  getDonorDetails = () => {
+  getRequesterDetails = () => {
     db.collection("users")
-      .where("Email_ID", "==", this.state.donorID)
+      .where("Email_ID", "==", this.state.requesterID)
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           this.setState({
-            donorName: doc.data().First_Name + " " + doc.data().Last_Name,
-            donorContact: doc.data().Mobile_Number,
-            donorAddress: doc.data().Address,
+            requesterName: doc.data().First_Name + " " + doc.data().Last_Name,
+            requesterContact: doc.data().Mobile_Number,
+            requesterAddress: doc.data().Address,
           });
         });
       });
@@ -57,16 +57,16 @@ export default class RequestAcceptScreen extends Component {
     db.collection("transactions").add({
       Name: this.state.name,
       Transaction_ID: this.state.transactionID,
-      Requester_ID: this.state.userID,
-      Donor_ID: this.state.donorID,
-      Status: "Requester Interested",
+      Requester_ID: this.state.requesterName,
+      Donor_ID: this.state.userID,
+      Status: "Donor Interested",
     });
   };
 
   addNotification = () => {
-    var message = this.state.userID + " has shown interest in requesting";
+    var message = this.state.userID + " has shown interest in donating";
     db.collection("notifications").add({
-      Receiver_ID: this.state.donorID,
+      Receiver_ID: this.state.requesterID,
       Sender_ID: this.state.userID,
       Transaction_ID: this.state.transactionID,
       Name: this.state.name,
@@ -81,7 +81,7 @@ export default class RequestAcceptScreen extends Component {
       <View style={{ marginTop: 100 }}>
         <View style={{ flex: 0.7 }}>
           <Text style={{ fontWeight: "500", fontSize: RFValue(30) }}>
-            Donor Information
+            Requester Information
           </Text>
           <Text
             style={{
@@ -90,10 +90,10 @@ export default class RequestAcceptScreen extends Component {
               marginTop: RFValue(30),
             }}
           >
-            Name: {this.state.donorName}
+            Name: {this.state.requesterName}
           </Text>
-          <Text>Contact: {this.state.donorContact}</Text>
-          <Text>Address: {this.state.donorAddress}</Text>
+          <Text>Contact: {this.state.requesterContact}</Text>
+          <Text>Address: {this.state.requesterAddress}</Text>
           <View
             style={{
               flex: 0.6,
@@ -102,22 +102,22 @@ export default class RequestAcceptScreen extends Component {
               marginTop: 200,
             }}
           >
-            <Text>ID of Donor: {this.state.donorID}</Text>
+            <Text>ID of Requester: {this.state.requesterID}</Text>
             <Text>Name: {this.state.name}</Text>
             <Text>Description: {this.state.description}</Text>
           </View>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          {this.state.donorID !== this.state.userID ? (
+          {this.state.requesterID !== this.state.userID ? (
             <TouchableOpacity
               style={{ margin: 100, marginTop: 500 }}
               onPress={() => {
                 this.updateStatus();
                 this.addNotification();
-                this.props.navigation.navigate("Request");
+                this.props.navigation.navigate("Donate");
               }}
             >
-              <Text>I want to Request</Text>
+              <Text>I want to Donate</Text>
             </TouchableOpacity>
           ) : null}
         </View>

@@ -2,9 +2,9 @@ import React from "react";
 import { Image } from "react-native";
 import { createStackNavigator } from "react-navigation-stack";
 import DonateScreen from "../screens/DonateScreen";
-import RequestAcceptScreen from "../screens/RequestAcceptScreen";
+import DonateAcceptScreen from "../screens/DonateAcceptScreen";
 
-export const AppStackNavigator = createStackNavigator(
+export const DonateStackNavigator = createStackNavigator(
   {
     Donate: {
       screen: DonateScreen,
@@ -12,8 +12,8 @@ export const AppStackNavigator = createStackNavigator(
         headerShown: false,
       },
     },
-    RequestAccept: {
-      screen: RequestAcceptScreen,
+    DonateAccept: {
+      screen: DonateAcceptScreen,
       navigationOptions: {
         headerShown: false,
       },

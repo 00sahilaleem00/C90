@@ -1,12 +1,13 @@
 import React from "react";
 import { Image } from "react-native";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { AppStackNavigator } from "./AppStackNavigator";
-import RequestScreen from "../screens/RequestScreen";
+import { DonateStackNavigator } from "./DonateStackNavigator";
+import { RequestStackNavigator } from "./RequestStackNavigator";
+import SubmissionScreen from "../screens/SubmissionScreen";
 
 export const AppTabNavigator = createBottomTabNavigator({
   Donate: {
-    screen: AppStackNavigator,
+    screen: DonateStackNavigator,
     navigationOptions: {
       tabBarIcon: (
         <Image
@@ -18,7 +19,7 @@ export const AppTabNavigator = createBottomTabNavigator({
     },
   },
   Request: {
-    screen: RequestScreen,
+    screen: RequestStackNavigator,
     navigationOptions: {
       tabBarIcon: (
         <Image
@@ -27,6 +28,18 @@ export const AppTabNavigator = createBottomTabNavigator({
         />
       ),
       tabBarLabel: "Request",
+    },
+  },
+  Submit: {
+    screen: SubmissionScreen,
+    navigationOptions: {
+      tabBarIcon: (
+        <Image
+          source={require("../assets/submitimage.png")}
+          style={{ width: 20, height: 20 }}
+        />
+      ),
+      tabBarLabel: "Submit",
     },
   },
 });
