@@ -19,3 +19,8 @@ they can see requests of other people, along with donations
 we can have two screens - one has the requests, and the other has the donations.
 We can also have screens to edit your personal info ( setting screen )
 we can have screens to see all the things you've donated/all the items on offer you've used
+
+we need to create the notifications screen - so that users can see their notifications, and mark some as read
+we need to create the donate and request history screens - so that users can see their donations and requests
+we need to create the settings screen - so that users can edit their personal information
+we need to add the header - so that users can use hamburger icon and notification bell icon
