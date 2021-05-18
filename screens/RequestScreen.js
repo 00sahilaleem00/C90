@@ -18,6 +18,7 @@ import { Card, ListItem, Icon } from "react-native-elements";
 import { RFValue } from "react-native-responsive-fontsize";
 import db from "../config.js";
 import firebase from "firebase";
+import MyHeader from "../components/MyHeader";
 
 //This is analogous to BookDonateScreen, but for requests
 export default class RequestScreen extends Component {
@@ -30,12 +31,15 @@ export default class RequestScreen extends Component {
   }
 
   getDonations = () => {
-    this.donationRef = db.collection("donations").onSnapshot((snapshot) => {
-      var donationsArray = snapshot.docs.map((document) => document.data());
-      this.setState({
-        donations: donationsArray,
+    this.donationRef = db
+      .collection("donations")
+      .where("Status", "!=", "Received")
+      .onSnapshot((snapshot) => {
+        var donationsArray = snapshot.docs.map((document) => document.data());
+        this.setState({
+          donations: donationsArray,
+        });
       });
-    });
   };
 
   componentDidMount = () => {
@@ -72,6 +76,7 @@ export default class RequestScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <MyHeader title="Request" navigation={this.props.navigation} />
         <View style={{ flex: 1 }}>
           {this.state.donations.length === 0 ? (
             <View

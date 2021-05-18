@@ -16,6 +16,7 @@ import { Input } from "react-native-elements";
 import { RFValue } from "react-native-responsive-fontsize";
 import firebase from "firebase";
 import db from "../config.js";
+import MyHeader from "../components/MyHeader";
 
 export default class SettingsScreen extends Component {
   constructor() {
@@ -71,6 +72,7 @@ export default class SettingsScreen extends Component {
   render() {
     return (
       <View style={{ flex: 0.9 }}>
+        <MyHeader title="Settings" navigation={this.props.navigation} />
         <TextInput
           placeholder={"First Name"}
           style={{

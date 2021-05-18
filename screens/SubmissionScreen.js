@@ -18,6 +18,7 @@ import { Card, Input } from "react-native-elements";
 import { RFValue } from "react-native-responsive-fontsize";
 import firebase from "firebase";
 import db from "../config.js";
+import MyHeader from "../components/MyHeader";
 
 //This is analogous to BookRequestScreen
 //"name" refers to the name of the donation/request
@@ -102,10 +103,11 @@ export default class SubmissionScreen extends Component {
     db.collection("requests").add({
       User_ID: this.state.userID,
       Name: this.state.name,
-      description: this.state.description,
+      Description: this.state.description,
       Transaction_ID: randomRequestID,
       Date: firebase.firestore.FieldValue.serverTimestamp(),
       Status: "Requested",
+      Type: "Request",
     });
     await this.getRequest();
     db.collection("users")
@@ -135,6 +137,7 @@ export default class SubmissionScreen extends Component {
       Transaction_ID: randomDonationID,
       Date: firebase.firestore.FieldValue.serverTimestamp(),
       Status: "Requested",
+      Type: "Donation",
     });
     await this.getDonation();
     this.setState({
@@ -180,6 +183,17 @@ export default class SubmissionScreen extends Component {
         snapshot.forEach((doc) => {
           var docID = doc.id;
           db.collection("requests").doc(docID).update({
+            Status: "Received",
+          });
+        });
+      });
+    db.collection("transactions")
+      .where("Transaction_ID", "==", this.state.transactionID)
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          var docID = doc.id;
+          db.collection("transactions").doc(docID).update({
             Status: "Received",
           });
         });
@@ -237,24 +251,23 @@ export default class SubmissionScreen extends Component {
           });
         });
       });
+    db.collection("transactions")
+      .where("Transaction_ID", "==", this.state.transactionID)
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          var docID = doc.id;
+          db.collection("transactions").doc(docID).update({
+            Status: "Received",
+          });
+        });
+      });
   };
 
   render() {
     if (this.state.isRequestActive === true) {
       return (
         <View style={{ flex: 1, justifyContent: "center" }}>
-          <View
-            style={{
-              borderColor: "red",
-              borderWidth: 2,
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 10,
-            }}
-          >
-            <Text>Name</Text>
-            <Text>{this.state.name}</Text>
-          </View>
           <View
             style={{
               borderColor: "blue",
@@ -331,7 +344,8 @@ export default class SubmissionScreen extends Component {
       );
     } else {
       return (
-        <View style={{ marginTop: 100 }}>
+        <View>
+          <MyHeader title="Submit" navigation={this.props.navigation} />
           <KeyboardAvoidingView style={styles.keyboardStyle}>
             <Input
               style={styles.formTextInput}

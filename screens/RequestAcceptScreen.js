@@ -60,6 +60,7 @@ export default class RequestAcceptScreen extends Component {
       Requester_ID: this.state.userID,
       Donor_ID: this.state.donorID,
       Status: "Requester Interested",
+      Type: "Donation",
     });
   };
 
